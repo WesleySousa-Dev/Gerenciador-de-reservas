@@ -3,9 +3,10 @@ package io.github.wesleyy06.Gerenciador_de_reservas.main;
 import io.github.wesleyy06.Gerenciador_de_reservas.models.Customer;
 import io.github.wesleyy06.Gerenciador_de_reservas.models.Reserve;
 import io.github.wesleyy06.Gerenciador_de_reservas.useful.DateTimeFormater;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,7 +16,7 @@ public class main {
 
     Scanner scanner = new Scanner(System.in);
 
-    public void executar(){
+    public void execute(){
         newReserve();
     }
 
@@ -29,7 +30,7 @@ public class main {
         String name = scanner.nextLine();
         System.out.print("segundo nome: ");
         String lastName = scanner.nextLine();
-        System.out.println("\nTelefone de quem está reservando: ");
+        System.out.print("Telefone de quem está reservando: ");
         long phoneNumber = scanner.nextLong();
 
         System.out.print("\nDigite o dia da reserva: ");
@@ -46,7 +47,7 @@ public class main {
         LocalDate reservationDate = LocalDate.of(2025, month, day);
 
         Customer customer = new Customer(name, lastName, phoneNumber);
-        Reserve _reserve = new Reserve(name, lastName, phoneNumber, reservationDate, DateTimeFormater.dateTimerFormater(hour));
+        Reserve _reserve = new Reserve(reservationDate, DateTimeFormater.dateTimerFormater(hour), customer);
 
         reserve.add(_reserve);
 
