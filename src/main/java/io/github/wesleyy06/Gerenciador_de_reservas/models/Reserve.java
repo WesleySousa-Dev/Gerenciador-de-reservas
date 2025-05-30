@@ -1,33 +1,41 @@
 package io.github.wesleyy06.Gerenciador_de_reservas.models;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Reserve extends Customer{
+@Entity
+@Table(name="reservas")
+public class Reserve {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(nullable = false)
     private LocalDate reserveDate;
+
+    @Column(nullable = false)
     private LocalTime reservationTime;
 
-    public Reserve(LocalDate reserveDate, LocalTime reservationTime) {
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
+    private Customer customer;
+
+    public Reserve() {}
+
+    public Reserve(LocalDate reserveDate, LocalTime reservationTime, Customer customer) {
         this.reserveDate = reserveDate;
         this.reservationTime = reservationTime;
-    }
-
-    public Reserve(String name, String lastname, long phoneNumber, LocalDate reserveDate, LocalTime reservationTime) {
-        super(name, lastname, phoneNumber);
-        this.reserveDate = reserveDate;
-
-        if(reservationTime == null) {
-            System.out.println("Horario mencianado invalido!");
-        } else {
-            this.reservationTime = reservationTime;
-        }
+        this.customer = customer;
     }
 
     @Override
     public String toString() {
-        return "Nome: " + getName() + ' ' + getLastname()+
-                "Telefone/celular: " + getPhoneNumber() +
-                "Data reserva: " + reserveDate +
-                "Horario marcado: " + reservationTime;
+        return "Nome: " + customer.getName() + ' ' + customer.getLastName()+
+                "\nTelefone/celular: " + customer.getPhoneNumber() +
+                "\nData reserva: " + reserveDate +
+                "\nHorario marcado: " + reservationTime;
     }
 }
